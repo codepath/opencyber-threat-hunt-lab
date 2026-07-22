@@ -103,7 +103,7 @@ Let's see what we're working with.
 
 - [ ] Expand a few events and browse the **Interesting Fields** panel on the left.
 
-You should see fields including `IP Address`, `Country`, and possibly others. These are the columns from the CSV, parsed as searchable fields.
+You should see fields including `Order` and `IP Address` — these are the columns from the CSV, parsed as searchable fields. The raw feed contains only IP addresses, so there's no `Country` field yet. You'll derive geographic details like country in the next step using Splunk's `iplocation` command.
 
 > [!NOTE]
 > Field names that contain spaces (like `IP Address`) must be quoted in SPL searches: `"IP Address"`. You'll see this pattern throughout this lab.
@@ -115,7 +115,13 @@ You should see fields including `IP Address`, `Country`, and possibly others. Th
 > [!TIP]
 > If these return 0 results, switch the search mode from **Smart** to **Verbose** using the dropdown next to the search bar. Smart mode sometimes skips field extraction for exploratory searches.
 
-  - Which countries have the most Tor exit nodes? (`| stats count by Country | sort -count`)
+  - Which countries have the most Tor exit nodes? Run:
+
+    ```SPL
+    source="IOCs_Tor.csv" | iplocation "IP Address" | stats count by Country | sort -count
+    ```
+
+    The feed only stores IP addresses, so `Country` isn't in the data yet. Splunk's `iplocation` command enriches each event by looking up its IP address and adding geographic fields such as `Country`, `City`, and `Region` at search time. Once `iplocation` has run, `stats count by Country` can group on that derived field.
   - Are any IP addresses duplicated in the feed?
 
 🎯 **Checkpoint 2**: You should have a working sense of what the Tor feed contains — a list of known Tor network IP addresses with associated metadata.
