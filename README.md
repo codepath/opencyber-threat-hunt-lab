@@ -43,3 +43,9 @@ docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var ghcr.io/cod
 ```
 
 > **Note:** The named volume (`threat-hunt-data`) persists data you upload between sessions. Your work is safe if you stop and restart the container.
+
+## License
+
+The code in this repo (Dockerfile, Makefile, scripts, configuration) is licensed under the **Apache License 2.0**. The lab instructions and other teaching material are licensed under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**.
+
+You are free to use, adapt, and run this lab in your own courses, including commercially, as long as you credit CodePath and indicate what you changed. See [LICENSE](./LICENSE) for the terms that govern.
