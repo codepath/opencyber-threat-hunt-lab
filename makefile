@@ -10,7 +10,7 @@ student:
 
 # Run a container from the local build
 run:
-	docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var $(IMAGE_NAME):local
+	docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var -v threat-hunt-users:/opt/splunk/etc/users -v threat-hunt-search:/opt/splunk/etc/apps/search/local $(IMAGE_NAME):local
 
 # Clean up dangling images (optional)
 clean:
@@ -18,7 +18,7 @@ clean:
 
 # Run the image from GitHub Container Registry
 ghcr:
-	docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var ghcr.io/codepath/$(IMAGE_NAME):latest
+	docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var -v threat-hunt-users:/opt/splunk/etc/users -v threat-hunt-search:/opt/splunk/etc/apps/search/local ghcr.io/codepath/$(IMAGE_NAME):latest
 
 # Build and push to GitHub Container Registry (requires docker login ghcr.io)
 push:
