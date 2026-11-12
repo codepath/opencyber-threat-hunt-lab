@@ -39,10 +39,10 @@ The Docker image includes:
 ### Running the Lab
 
 ```bash
-docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var ghcr.io/codepath/opencyber-threat-hunt-lab:latest
+docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var -v threat-hunt-users:/opt/splunk/etc/users -v threat-hunt-search:/opt/splunk/etc/apps/search/local ghcr.io/codepath/opencyber-threat-hunt-lab:latest
 ```
 
-> **Note:** The named volume (`threat-hunt-data`) persists data you upload between sessions. Your work is safe if you stop and restart the container.
+> **Note:** The named volumes save your work between sessions. `threat-hunt-data` holds the data you upload. `threat-hunt-users` and `threat-hunt-search` hold your saved searches, reports, and dashboards. Your work is safe if you stop the container and start it again with this same command.
 
 ## License
 

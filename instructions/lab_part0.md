@@ -33,7 +33,7 @@ Lab Parts:
 - [ ] Run the lab container with:
 
   ```bash
-  docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var --platform linux/amd64 ghcr.io/codepath/opencyber-threat-hunt-lab:latest
+  docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var -v threat-hunt-users:/opt/splunk/etc/users -v threat-hunt-search:/opt/splunk/etc/apps/search/local --platform linux/amd64 ghcr.io/codepath/opencyber-threat-hunt-lab:latest
   ```
 
 - [ ] Splunk takes about **30–60 seconds** to initialize. Watch your terminal — when you see a "Splunk is ready!" message, proceed to the next step.
@@ -47,14 +47,14 @@ Lab Parts:
 If you can see the Splunk home screen, you are ready to [**proceed to Part 1**](./lab_part1.md).
 
 > [!IMPORTANT]
-> Keep your terminal open for the entire lab — closing it stops the container. Data you upload **persists between sessions** via the named volume, so you can safely stop and restart without losing progress.
+> Keep your terminal open for the entire lab — closing it stops the container. Data you upload and the dashboards you build **persist between sessions** in the named volumes, so you can safely stop and restart without losing progress. Always start the lab with the command above.
 
 > [!TIP]
 > If you want to reset the lab and start fresh with a clean Splunk instance, stop the container and run:
 > ```bash
-> docker volume rm threat-hunt-data
+> docker volume rm threat-hunt-data threat-hunt-users threat-hunt-search
 > ```
-> The next time you run `docker run`, a new empty volume will be created automatically.
+> The next time you run `docker run`, new empty volumes will be created automatically. If Docker says a volume does not exist, you can ignore that message.
 
 > [!TIP]
 > If you see a warning about `FROM --platform flag should not use constant value "linux/amd64"` during the build, you can safely ignore it. This is intentional — Splunk Enterprise has no native arm64 package, so we pin to amd64 explicitly. It runs fine on Apple Silicon under Rosetta 2.
@@ -66,5 +66,5 @@ If you can see the Splunk home screen, you are ready to [**proceed to Part 1**](
 > git clone https://github.com/codepath/opencyber-threat-hunt-lab.git
 > cd opencyber-threat-hunt-lab
 > docker build --platform linux/amd64 -t opencyber-threat-hunt-lab:local -f docker/Dockerfile .
-> docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var --platform linux/amd64 opencyber-threat-hunt-lab:local
+> docker run --rm -it -p 8000:8000 -v threat-hunt-data:/opt/splunk/var -v threat-hunt-users:/opt/splunk/etc/users -v threat-hunt-search:/opt/splunk/etc/apps/search/local --platform linux/amd64 opencyber-threat-hunt-lab:local
 > ```
